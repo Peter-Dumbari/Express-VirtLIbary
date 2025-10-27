@@ -1,11 +1,13 @@
 const Category = require("../models/categories");
+const Book = require("../models/book");
+const User = require("../models/user");
 
 exports.createCategory = async (req, res) => {
   try {
     const { name } = req.body;
 
     const existingCategory = await Category.findOne({ name });
-    if (!existingCategory)
+    if (existingCategory)
       return res.status(402).json({ message: "Category already exits" });
 
     const category = await Category.create({ name });

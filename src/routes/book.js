@@ -16,13 +16,13 @@ router.post(
   "/",
   auth,
   isAdminOnly,
+  upload.single("coverImage"),
   bookValidator,
-  upload.single("CoverImage"),
   postBook
 );
 router.get("/", auth, getAllBooks);
 router.get("/search", searchBooks);
-router.put("/:id", auth, isAdminOnly, upload.single("CoverImage"), updateBook);
+router.put("/:id", auth, isAdminOnly, upload.single("coverImage"), updateBook);
 router.delete("/:id", auth, isAdminOnly, deleteBook);
 
 module.exports = router;
