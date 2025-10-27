@@ -16,5 +16,8 @@ exports.bookValidator = [
   body("author").trim().notEmpty().withMessage("Author is required"),
   body("title").trim().notEmpty().withMessage("Title is required"),
   body("src").trim().notEmpty().withMessage("Book source is required"),
-  body("description").notEmpty().withMessage("Book description is required"),
+  body("description")
+    .trim()
+    .notEmpty()
+    .withMessage("Book description is required"),
 ];

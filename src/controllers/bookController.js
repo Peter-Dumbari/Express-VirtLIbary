@@ -96,7 +96,7 @@ exports.searchBooks = async (req, res) => {
 exports.updateBook = async (req, res) => {
   const { id } = req.params;
 
-  const book = Book.findById(id);
+  const book = await Book.findById(id);
   if (!book) return res.status(404).json({ message: "Book not found" });
 
   if (req.file) {
@@ -116,12 +116,24 @@ exports.updateBook = async (req, res) => {
   }
 
   // Update other fields
-  const { title, author, description, category, recommended } = req.body;
+  const {
+    title,
+    author,
+    description,
+    category,
+    recommended,
+    downloads,
+    like,
+    reads,
+  } = req.body;
   if (title) book.title = title;
   if (author) book.author = author;
   if (description) book.description = description;
   if (category) book.category = category;
   if (recommended !== undefined) book.recommended = recommended;
+  if (downloads) book.downloads = downloads;
+  if (like) book.light = light;
+  if (reads) book.reads = reads;
 
   // Save updates
   await book.save();

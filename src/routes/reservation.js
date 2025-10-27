@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/", auth, createReservation);
 router.get("/my-reservations", auth, getReservationsByReader);
-router.delete("/:d", auth, cancelReservation);
+router.delete("/:id", auth, cancelReservation);
 
 module.exports = router;
