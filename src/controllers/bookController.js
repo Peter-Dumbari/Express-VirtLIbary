@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const Book = require("../models/book");
 const cloudinary = require("cloudinary");
 const User = require("../models/user");
+const Category = require("../models/categories");
 
 exports.postBook = async (req, res) => {
   const errors = validationResult(req);
@@ -62,19 +63,25 @@ exports.getAllBooks = async (req, res) => {
 
 exports.searchBooks = async (req, res) => {
   try {
-    const { title, author, category } = req.params;
+    const { title, author, category } = req.query;
+
     let filter = {};
 
     if (title) {
-      filter.title = { $regex: title, $options: "i" };
+      const words = title.split(" ").filter(Boolean);
+      filter.$and = words.map((word) => ({
+        title: { $regex: word, $options: "i" },
+      }));
     }
     if (author) {
       filter.author = { $regex: author, $options: "i" };
     }
 
-    if (category) {
-      // If your category is stored as an ObjectId ref
-      filter.category = category;
+    if (category && category.trim() !== "") {
+      const foundCategory = await Category.findOne({
+        name: { $regex: category, $options: "i" },
+      });
+      if (foundCategory) filter.category = foundCategory._id;
     }
 
     const books = await Book.find(filter)
