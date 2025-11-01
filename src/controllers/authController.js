@@ -55,7 +55,8 @@ exports.login = async (req, res) => {
 
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("preferredCategories");
+
     if (!user) return res.status(404).json({ error: "Invalid Credentials" });
     const matched = await bcrypt.compare(password, user.password);
     if (!matched) return res.status(404).json({ error: "Invalid Credentials" });
@@ -69,6 +70,7 @@ exports.login = async (req, res) => {
         role: user.role,
         name: user.name,
         email: user.email,
+        preferredCategories: user.preferredCategories, // ✅ include populated data
       },
     });
   } catch (error) {
