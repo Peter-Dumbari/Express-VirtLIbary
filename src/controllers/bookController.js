@@ -63,7 +63,6 @@ exports.getAllBooks = async (req, res) => {
 exports.searchBooks = async (req, res) => {
   try {
     const { title, author, category } = req.params;
-
     let filter = {};
 
     if (title) {

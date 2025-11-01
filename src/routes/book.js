@@ -22,7 +22,7 @@ router.post(
 );
 router.get("/", auth, getAllBooks);
 router.get("/search", searchBooks);
-router.put("/:id", auth, isAdminOnly, upload.single("coverImage"), updateBook);
+router.put("/:id", auth, upload.single("coverImage"), updateBook);
 router.delete("/:id", auth, isAdminOnly, deleteBook);
 
 module.exports = router;

@@ -14,7 +14,11 @@ const reservationSchema = mongoose.Schema(
     },
     end_reservation_date: {
       type: Date,
-      required: true,
+      default: function () {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // add one day
+        return tomorrow;
+      },
     },
   },
   {
