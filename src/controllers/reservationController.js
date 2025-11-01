@@ -39,7 +39,7 @@ exports.getReservationsByReader = async (req, res) => {
     const readerId = req.user._id;
 
     const reservations = await Reservation.find({ reader: readerId })
-      .populate("book", "title author coverImage")
+      .populate("book", "title author coverImage description")
       .sort({ createdAt: -1 });
 
     if (reservations.length === 0) {
