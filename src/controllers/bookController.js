@@ -24,7 +24,11 @@ exports.postBook = async (req, res) => {
     await book.save();
     return res
       .status(201)
-      .json({ book: book, message: "Book created successfully" });
+      .json({
+        book: book,
+        message: "Book created successfully",
+        status: "success",
+      });
   } catch (error) {
     console.log("error", error);
     return res.status(500).json({ error: "Server error" });

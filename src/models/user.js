@@ -7,10 +7,6 @@ const userSchema = mongoose.Schema(
       enum: ["admin", "reader"],
       default: "reader",
     },
-    name: {
-      type: String,
-      require: true,
-    },
     email: {
       type: String,
       required: true,
